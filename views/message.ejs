@@ -1,0 +1,76 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - EventUs</title>
+    
+    <link rel="stylesheet" href="/css/global.css">
+
+    <style>
+        body { background-color: var(--background); } 
+        
+        .message-card {
+            background: var(--card-bg);
+            max-width: 450px;
+            margin: 80px auto;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            text-align: center;
+            border: 1px solid #333;
+            color: white;
+        }
+        .message-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        .message-title {
+            color: white;
+            margin: 0 0 10px 0;
+            font-size: 1.8rem;
+        }
+        .message-body {
+            color: #b0b0b0;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+        .btn-action {
+            display: inline-block;
+            padding: 12px 35px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        .btn-action:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="/" class="brand-wrapper">
+            <img src="/images/logo.png" alt="EventUs Logo" class="nav-logo"> 
+            <h1>EVENTUS</h1>
+        </a>
+        <a href="/" class="btn-nav">Back to Home</a>
+    </nav>
+
+    <div class="container">
+        <div class="message-card">
+            <div class="message-icon"><%= icon %></div>
+            <h1 class="message-title"><%= title %></h1>
+            <p class="message-body"><%= message %></p>
+            
+            <a href="<%= linkUrl %>" class="btn-action"><%= linkText %></a>
+        </div>
+    </div>
+
+</body>
+</html>

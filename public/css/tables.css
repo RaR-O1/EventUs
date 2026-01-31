@@ -1,0 +1,96 @@
+ /* public/css/tables.css */
+
+.table-wrapper {
+    background: var(--card-bg); /* Dark Grey */
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    overflow-x: auto;
+    border: 1px solid #333;
+    color: white;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 15px;
+}
+
+.page-header h1 {
+    margin: 0;
+    color: white;
+    font-size: 1.5rem;
+}
+
+/* The Table */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    min-width: 600px;
+}
+
+/* Header Row */
+.styled-table thead tr {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th, 
+.styled-table td {
+    padding: 15px 20px;
+}
+
+/* Body Rows */
+.styled-table tbody tr {
+    border-bottom: 1px solid #333;
+    transition: background-color 0.2s;
+}
+
+/* Striped Effect */
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #252525;
+}
+
+/* Hover Effect */
+.styled-table tbody tr:hover {
+    background-color: #333; 
+}
+
+/* Empty State */
+.no-data {
+    text-align: center;
+    padding: 40px;
+    color: #888;
+    font-style: italic;
+}
+
+/* --- ATTENDANCE SPECIFIC STYLES (REQUIRED FOR attendees.ejs) --- */
+
+.attendance-table th {
+    /* Ensure column headers are neat */
+    font-weight: 600;
+    color: #495057; /* Use a standard dark text color for contrast */
+}
+
+.attendance-table td {
+    vertical-align: middle;
+}
+
+.status-badge {
+    /* Style the container for better alignment */
+    display: inline-block;
+    min-width: 80px; /* Give badges a consistent minimum width */
+    padding: 0 5px;
+}
+
+.btn-action {
+    /* Style the toggle buttons */
+    width: 120px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}

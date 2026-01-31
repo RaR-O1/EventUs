@@ -1,0 +1,41 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - EventUs</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+
+    <nav>
+        <a href="/" class="brand-wrapper">
+            <img src="/images/logo.png" alt="EventUs Logo" class="nav-logo"> 
+            <h1>EVENTUS</h1>
+        </a>
+        <a href="/" class="btn-nav">Back to Home</a>
+    </nav>
+
+    <div class="container form-container">
+        <h2>Login</h2>
+        
+        <form action="/login" method="POST">
+            <label>Email Address:</label>
+            <input type="email" name="email" required placeholder="student@glbitm.ac.in">
+
+            <label>Password:</label>
+            <input type="password" name="password" required>
+
+            <div style="text-align: right; margin-bottom: 15px;">
+                <a href="/forgot-password" style="font-size: 0.9rem;">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn-submit">Login</button>
+        </form>
+        <p style="margin-top: 20px;">
+            New here? <a href="/register">Create an account</a>
+        </p>
+    </div>
+
+</body>
+</html>

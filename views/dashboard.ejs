@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+
+    <%- include('partials/header') %> 
+    
+    <div class="container">
+        <h1>Welcome, <%= user.fullname %>! 🎓</h1>
+        <h2>Your Registered Events</h2>
+
+        <% if (events.length === 0) { %>
+            <p class="message-info">You are not currently registered for any events.</p>
+        <% } else { %>
+            <div class="event-list">
+                <% events.forEach(function(event) { %>
+                    <div class="event-card">
+                        <h3><%= event.name %></h3>
+                        <p><strong>Date:</strong> <%= event.date %></p>
+                        <p><strong>Venue:</strong> <%= event.venue %></p>
+                        <p><%= event.description %></p>
+                        
+                        <hr>
+                        
+                        <% 
+                            const today = new Date(); 
+                            // 🚀 Robust Crash Fix: Ensures comparison is only done if the date is valid.
+                            const isPastEvent = event.event_date && !isNaN(event.event_date) && event.event_date < today; 
+                        %>
+                        
+                        <% if (isPastEvent) { %> 
+                            <p class="concluded-tag">Event Concluded</p>
+                            
+                            <% if (!event.rating) { %>
+                                <div class="rating-box">
+                                    <h4>⭐️ Rate this Event (1-5)</h4>
+                                    
+                                    <form id="rating-form-<%= event.event_id %>" data-event-id="<%= event.event_id %>">
+                                        <div class="star-rating">
+                                            <% for(let i = 5; i >= 1; i--) { %>
+                                                <input type="radio" id="star<%= event.event_id %>-<%= i %>" name="rating" value="<%= i %>" required>
+                                                <label for="star<%= event.event_id %>-<%= i %>">&#9733;</label>
+                                            <% } %>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary submit-rating-btn">Submit Rating</button>
+                                    </form>
+                                    <div id="rating-message-<%= event.event_id %>" style="margin-top: 10px; font-weight: bold;"></div>
+                                </div>
+                            <% } else { %>
+                                <p class="submitted-rating" id="submitted-rating-<%= event.event_id %>">
+                                    Your Submitted Rating: 🌟 **<%= event.rating %>** / 5
+                                </p>
+                            <% } %>
+                        <% } else { %>
+                             <p class="upcoming-tag">Upcoming Event</p>
+                        <% } %>
+                        </div>
+                <% }); %>
+            </div>
+        <% } %>
+    </div>
+
+    <%- include('partials/footer') %> 
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const updateUISuccess = (form, ratingValue, messageDiv) => {
+        const submittedText = document.createElement('p');
+        submittedText.className = 'submitted-rating';
+        submittedText.innerHTML = `Your Submitted Rating: 🌟 <strong>${ratingValue}</strong> / 5`;
+        
+        form.parentElement.replaceChild(submittedText, form);
+        
+        messageDiv.style.color = 'green';
+        messageDiv.textContent = 'Rating submitted successfully! Thank you.';
+    };
+
+    const ratingForms = document.querySelectorAll('form[id^="rating-form-"]');
+
+    ratingForms.forEach(form => {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault(); 
+
+            const eventId = form.getAttribute('data-event-id');
+            const selectedRating = form.querySelector('input[name="rating"]:checked');
+            
+            if (!selectedRating) {
+                alert("Please select a star rating!");
+                return;
+            }
+
+            const ratingValue = selectedRating.value;
+            const messageDiv = document.getElementById(`rating-message-${eventId}`);
+            
+            messageDiv.textContent = 'Submitting...';
+            messageDiv.style.color = '#ffc107'; 
+
+            try {
+                const response = await fetch(`/event/${eventId}/rate`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ rating: ratingValue })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    updateUISuccess(form, ratingValue, messageDiv);
+                } else {
+                    messageDiv.style.color = 'red';
+                    messageDiv.textContent = result.message || 'Error submitting rating. Try again.';
+                }
+            } catch (error) {
+                console.error('Network or Fetch Error:', error);
+                messageDiv.style.color = 'red';
+                messageDiv.textContent = 'Network error. Please try again.';
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>

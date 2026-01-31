@@ -1,0 +1,294 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventUs</title>
+    
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+
+    <nav>
+        <a href="/" class="brand-wrapper">
+            <img src="/images/logo.png" alt="EventUs Logo" class="nav-logo"> 
+            <h1>EVENTUS</h1>
+        </a>
+
+        <form action="/" method="GET" class="nav-search-container">
+            <input type="text" name="search" placeholder="Search events..." class="nav-search-input" value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>">
+            
+            <% if (typeof searchQuery !== 'undefined' && searchQuery) { %> 
+                <a href="/" class="nav-clear-btn" title="Clear Search">✖</a>
+            <% } %>
+            
+            <button type="submit" class="nav-search-btn">🔍</button>
+        </form>
+
+        <div class="nav-links">
+            <% if (user) { %>
+                <span style="margin-right: 15px; font-weight: bold; color: var(--secondary);" id="user-status">
+                    Welcome, <%= user.fullname %>
+                </span>
+                
+                <a href="/dashboard" class="btn-nav">Dashboard</a>
+                
+                <% if (user.role === 'admin') { %>
+                     <a href="/admin/create" class="btn-nav">Add Event</a>
+                <% } %>
+                
+                <a href="/logout" class="btn-nav btn-logout">Logout</a> 
+            <% } else { %>
+                <a href="/login" class="btn-nav" id="user-status">Login</a>
+                <a href="/register" class="btn-nav btn-signup">Sign Up</a>
+            <% } %>
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <div style="margin-bottom: 30px;">
+            <h2>Upcoming Events</h2>
+            <% if (typeof searchQuery !== 'undefined' && searchQuery) { %> 
+                <p style="color: var(--text-muted);">
+                    Showing results for: **"<%= searchQuery %>"**
+                </p>
+            <% } %>
+        </div>
+
+        
+        <% 
+            const allEventsFound = upcomingEvents.length + pastEvents.length;
+            const searchActive = typeof searchQuery !== 'undefined' && searchQuery;
+        %>
+
+        <% if (allEventsFound > 0) { %>
+
+            <% if (upcomingEvents.length > 0) { %>
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: var(--secondary); border-bottom: 2px solid var(--card-bg); padding-bottom: 5px;">
+                        ➡️ Upcoming Events
+                    </h3>
+                </div>
+                
+                <div class="event-grid">
+                    <% upcomingEvents.forEach(event => { %>
+                        <div class="event-card">
+                            
+                            <% if (event.image && event.image !== 'default.jpg') { %>
+                                <img src="/uploads/<%= event.image %>" alt="<%= event.name %>" style="width: 100%; height: 200px; object-fit: cover;">
+                            <% } else { %>
+                                <div style="width: 100%; height: 200px; background-color: #333; display: flex; align-items: center; justify-content: center; color: #666;">
+                                    <span>Upcoming Event</span>
+                                </div>
+                            <% } %>
+
+                            <div class="card-content">
+                                <h3><%= event.name %></h3>
+                                <div class="event-info">📅 <%= new Date(event.date).toDateString() %></div>
+                                <div class="event-info">📍 <%= event.venue %></div>
+                                <p class="event-info" style="margin-top: 10px;"><%= event.description %></p>
+                                
+                                <% if (event.rating_count > 0) { %>
+                                    <p style="font-weight: bold; color: #ffc107;">
+                                        ⭐ Avg Rating: <%= event.avg_rating %> / 5 
+                                        (<%= event.rating_count %> votes)
+                                    </p>
+                                <% } else { %>
+                                    <p style="color: #999;">Be the first to rate!</p>
+                                <% } %>
+
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                    <% if (user) { %>
+                                        <div class="like-section" data-event-id="<%= event.id %>">
+                                            <button class="btn-register btn-sm like-btn <%= event.is_liked_by_user ? 'liked' : '' %>" style="width: auto; background: none; border: 1px solid var(--secondary); color: var(--secondary); padding: 5px 10px; font-size: 0.9em;">
+                                                <%= event.is_liked_by_user ? '❤️ Liked' : '🤍 Like' %>
+                                            </button>
+                                            <span class="like-count" style="margin-left: 10px; font-weight: bold; color: var(--text-color);">
+                                                <%= event.like_count %> Likes
+                                            </span>
+                                        </div>
+                                    <% } else { %>
+                                        <div class="like-section">
+                                            <span class="like-count" style="font-weight: bold; color: var(--text-color);"><%= event.like_count %> Likes</span>
+                                            <span style="font-size: 0.8em; color: gray; margin-left: 10px;">(Login to Like)</span>
+                                        </div>
+                                    <% } %>
+                                </div>
+                                <form action="/join-event" method="POST">
+                                    <input type="hidden" name="event_id" value="<%= event.id %>">
+                                    <button type="submit" class="btn-register">Register Now</button>
+                                </form>
+
+                                <% if (user && user.role === 'admin') { %>
+                                    <div class="admin-controls">
+                                        <a href="/admin/registrations/<%= event.id %>" class="btn-admin btn-view">View Registrations</a> 
+                                        <a href="/edit/<%= event.id %>" class="btn-admin btn-edit">Edit</a>
+                                        <form action="/delete-event" method="POST" style="flex: 1;" onsubmit="return confirm('Are you sure?');">
+                                            <input type="hidden" name="event_id" value="<%= event.id %>">
+                                            <button type="submit" class="btn-admin btn-admin-red btn-delete">Delete</button>
+                                        </form>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } %>
+
+
+            <% if (pastEvents.length > 0) { %>
+                <div style="margin-top: 50px; margin-bottom: 30px;">
+                    <h3 style="color: var(--text-muted); border-bottom: 2px solid #333; padding-bottom: 5px;">
+                        🕰️ Past Events
+                    </h3>
+                </div>
+                
+                <div class="event-grid">
+                    <% pastEvents.forEach(event => { %>
+                        <div class="event-card" style="opacity: 0.8;"> 
+                            <% if (event.image && event.image !== 'default.jpg') { %>
+                                <img src="/uploads/<%= event.image %>" alt="<%= event.name %>" style="width: 100%; height: 200px; object-fit: cover;">
+                            <% } else { %>
+                                <div style="width: 100%; height: 200px; background-color: #333; display: flex; align-items: center; justify-content: center; color: #666;">
+                                    <span>Past Event</span>
+                                </div>
+                            <% } %>
+
+                            <div class="card-content">
+                                <h3><%= event.name %></h3>
+                                <div class="event-info">📅 <%= new Date(event.date).toDateString() %></div>
+                                <div class="event-info">📍 <%= event.venue %></div>
+                                <p class="event-info" style="margin-top: 10px;"><%= event.description %></p>
+                                
+                                <% if (event.rating_count > 0) { %>
+                                    <p style="font-weight: bold; color: #ffc107;">
+                                        ⭐ Avg Rating: <%= event.avg_rating %> / 5 
+                                        (<%= event.rating_count %> votes)
+                                    </p>
+                                <% } else { %>
+                                    <p style="color: #999;">No ratings recorded.</p>
+                                <% } %>
+
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                    <% if (user) { %>
+                                        <div class="like-section" data-event-id="<%= event.id %>">
+                                            <span style="padding: 5px 10px; font-size: 0.9em; border: 1px solid #777; color: #777; border-radius: 8px;">
+                                                <%= event.is_liked_by_user ? '❤️ Liked' : '🤍 Like' %>
+                                            </span>
+                                            <span class="like-count" style="margin-left: 10px; font-weight: bold; color: var(--text-color);">
+                                                <%= event.like_count %> Likes
+                                            </span>
+                                        </div>
+                                    <% } else { %>
+                                        <div class="like-section">
+                                            <span class="like-count" style="font-weight: bold; color: var(--text-color);"><%= event.like_count %> Likes</span>
+                                        </div>
+                                    <% } %>
+                                </div>
+                                <div style="width: 100%; text-align: center; padding: 12px 0; background-color: #444; color: white; border-radius: 8px; margin-top: 15px; font-weight: bold;">
+                                    Event Concluded
+                                </div>
+                                
+                                <% if (user && user.role === 'admin') { %>
+                                    <div class="admin-controls" style="border-top: none; padding-top: 0;">
+                                        <a href="/admin/registrations/<%= event.id %>" class="btn-admin btn-view">View Registrations</a>
+                                        <a href="/edit/<%= event.id %>" class="btn-admin btn-edit">Edit</a>
+                                        <form action="/delete-event" method="POST" style="flex: 1;" onsubmit="return confirm('Are you sure?');">
+                                            <input type="hidden" name="event_id" value="<%= event.id %>">
+                                            <button type="submit" class="btn-admin btn-admin-red btn-delete">Delete</button>
+                                        </form>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } %>
+
+        <% } else if (searchActive) { %>
+            
+            <div class="empty-state-search">
+                <h3><span style="font-size: 2rem;">😕</span> No Results Found</h3>
+                <p>We couldn't find any events matching **"<%= searchQuery %>"**.</p>
+                <p>Try searching with different keywords, or <a href="/" style="color: var(--secondary); font-weight: bold;">Click here to see all upcoming events</a>.</p>
+            </div>
+        
+        <% } else { %>
+        
+            <div class="empty-state-search">
+                <h3><span style="font-size: 2rem;">📢</span> No Events Scheduled</h3>
+                <p>There are currently no events posted in the system.</p>
+                <% if (user && user.role === 'admin') { %>
+                    <a href="/admin/create" class="btn-browse">Post the First Event</a>
+                <% } %>
+            </div>
+            
+        <% } %>
+        </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const likeButtons = document.querySelectorAll('.like-btn');
+
+            likeButtons.forEach(button => {
+                button.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    
+                    const likeSection = button.closest('.like-section');
+                    const eventId = likeSection.getAttribute('data-event-id');
+                    const countSpan = likeSection.querySelector('.like-count');
+                    
+                    button.disabled = true; // Disable button while processing
+
+                    try {
+                        const response = await fetch('/event/toggle-like', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ event_id: eventId })
+                        });
+
+                        const result = await response.json();
+
+                        if (response.ok && result.success) {
+                            
+                            // Update button text and style based on the new state (isLiked)
+                            if (result.isLiked) {
+                                button.textContent = '❤️ Liked';
+                                button.classList.add('liked');
+                                button.style.color = 'white'; // Example style change
+                                button.style.backgroundColor = '#fa5252'; // Example style change
+                            } else {
+                                button.textContent = '🤍 Like';
+                                button.classList.remove('liked');
+                                button.style.color = 'var(--secondary)'; // Reset style
+                                button.style.backgroundColor = 'transparent'; // Reset style
+                            }
+                            
+                            // Update like count display
+                            if (result.newCount !== -1) {
+                                countSpan.textContent = `${result.newCount} Likes`;
+                            }
+                            
+                        } else if (response.status === 401) {
+                            alert('You must be logged in to like an event.');
+                            // Since requireLogin handles the redirect, this alert is mostly for user feedback.
+                        } else {
+                            alert(result.message || 'Error processing your like/unlike action.');
+                        }
+                    } catch (error) {
+                        console.error('Network or Fetch Error:', error);
+                        alert('Network error. Please try again.');
+                    } finally {
+                        button.disabled = false;
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

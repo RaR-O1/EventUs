@@ -1,0 +1,96 @@
+ /* public/css/create.css - DARK MODE */
+
+.form-wrapper {
+    max-width: 600px;
+    margin: 40px auto;
+    background-color: #1e1e1e; /* Dark Grey Card */
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    border: 1px solid #333;
+    color: white;
+}
+
+.form-header {
+    margin-bottom: 30px;
+    text-align: center;
+    border-bottom: 1px solid #333;
+    padding-bottom: 15px;
+}
+
+.form-header h1 {
+    margin: 0;
+    color: white;
+    font-size: 1.8rem;
+}
+
+/* Form Groups */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #b0b0b0; /* Light Grey */
+}
+
+input[type="text"],
+input[type="date"],
+textarea,
+input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #444;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    box-sizing: border-box;
+    background-color: #2d2d2d; /* Dark Input */
+    color: white;
+    transition: border-color 0.3s ease;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #6c5ce7; /* Purple focus */
+    outline: none;
+    background-color: #333;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Buttons */
+.btn-block {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #f39c12, #d35400); /* Orange Gradient for Edit */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    margin-top: 10px;
+}
+
+.btn-block:hover {
+    opacity: 0.9;
+}
+
+.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #888;
+    text-decoration: none;
+}
+
+.back-link:hover {
+    color: white;
+}

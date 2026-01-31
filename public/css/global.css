@@ -1,0 +1,309 @@
+ /* 1. DARK MODE VARIABLES */
+:root {
+    --background: #121212;    /* Very Dark Black */
+    --card-bg: #1e1e1e;       /* Light Black (Charcoal) */
+    --text-main: #e0e0e0;     /* White/Grey text */
+    --text-muted: #a0a0a0;    /* Dimmed text */
+
+    /* Brand Colors (Purple/Teal) */
+    --primary: #6c5ce7;       /* Purple */
+    --secondary: #00cec9;     /* Teal */
+    --accent: #ff7675;        /* Soft Red (for Logout/Delete) */
+
+    --radius: 12px;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background);
+    color: var(--text-main);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* 2. NAVIGATION BAR */
+nav {
+    background: linear-gradient(to right, #0054b4, #003d80);
+    padding: 0.8rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: none;
+}
+
+/* Logo & Brand Name */
+.brand-wrapper {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    background: transparent !important;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-logo {
+    height: 45px;
+    width: 45px;
+    margin-right: 12px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: white;
+    border: 2px solid var(--primary);
+}
+
+nav h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    background: linear-gradient(to right, var(--secondary), var(--primary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+/* 3. SEARCH BAR */
+.nav-search-container {
+    flex: 1;
+    max-width: 400px;
+    margin: 0 20px;
+    display: flex;
+    position: relative;
+    height: 42px;
+}
+
+.nav-search-input {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 20px 0 0 20px;
+    border: 1px solid #444;
+    border-right: none;
+    background-color: #2d2d2d;
+    color: white;
+    outline: none;
+    font-size: 1rem;
+}
+
+.nav-search-btn {
+    height: 100%;
+    padding: 0 15px;
+    border-radius: 0 20px 20px 0;
+    border: 1px solid #444;
+    border-left: none;
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.nav-clear-btn {
+    background-color: #2d2d2d;
+    color: var(--accent);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-top: 1px solid #444;
+    border-bottom: 1px solid #444;
+}
+
+/* 4. NAV LINKS */
+.nav-links {
+    display: flex;
+    align-items: center;
+}
+
+.btn-nav {
+    text-decoration: none;
+    padding: 8px 16px;
+    margin-left: 10px;
+    border-radius: 20px;
+    color: var(--text-main);
+    background-color: #333;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-nav:hover {
+    background-color: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-logout {
+    background-color: var(--accent) !important;
+    color: white !important;
+}
+
+.btn-signup {
+    background-color: var(--primary) !important;
+    color: white !important;
+}
+
+/* 5. GLOBAL UTILITIES */
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+h1, h2, h3 {
+    color: var(--text-main);
+}
+
+/* 6. CARD STYLES */
+.event-card {
+    background-color: var(--card-bg);
+    color: var(--text-main);
+    border: 1px solid #333;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+}
+
+/* 7. STAR RATING */
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    font-size: 1.5rem;
+    color: #ccc;
+    cursor: pointer;
+    padding: 0 3px;
+    transition: color 0.2s;
+    font-weight: 900;
+}
+
+.star-rating input:checked ~ label {
+    color: gold;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: orange;
+}
+
+/* 8. FOOTER */
+.main-footer {
+    background-color: #1a1a1a;
+    color: #888;
+    padding: 25px 0;
+    text-align: center;
+    margin-top: 40px;
+    border-top: 1px solid #333;
+}
+
+/* Admin Control Buttons */
+ /* Admin Control Buttons */
+.admin-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #333;
+}
+
+/* Fix alignment of Delete button (inside form) */
+.admin-controls form {
+    display: flex;
+    flex: 1;
+}
+
+.btn-admin {
+    flex: 1;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 0.95em;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    border: none;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-view {
+    background: linear-gradient(135deg, #4CAF50, #66BB6A);
+    box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
+}
+
+.btn-view:hover {
+    background: linear-gradient(135deg, #66BB6A, #81C784);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(76, 175, 80, 0.4);
+}
+
+.btn-edit {
+    background: linear-gradient(135deg, #FFC107, #FFCA28);
+    box-shadow: 0 4px 10px rgba(255, 193, 7, 0.3);
+}
+
+.btn-edit:hover {
+    background: linear-gradient(135deg, #FFCA28, #FFD54F);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 193, 7, 0.4);
+}
+
+.btn-admin-red {
+    background: linear-gradient(135deg, #F44336, #EF5350);
+    box-shadow: 0 4px 10px rgba(244, 67, 54, 0.3);
+}
+
+.btn-admin-red:hover {
+    background: linear-gradient(135deg, #EF5350, #E57373);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(244, 67, 54, 0.4);
+}
+
+.btn-register {
+    margin-top: 15px;
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1em;
+    font-weight: bold;
+    border-radius: 8px;
+    border: none;
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.btn-register:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+/* Make DELETE button match EDIT button dimensions */
+.btn-delete {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 25px 15px;    /* Same as .btn-edit */
+    border-radius: 10px;    /* Same as .btn-edit */
+    font-size: 0.95em;     /* Same as .btn-edit */
+    font-weight: bold;
+}

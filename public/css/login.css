@@ -1,0 +1,61 @@
+ /* public/css/login.css - DARK MODE FIX */
+
+/* The Card Itself */
+.form-container {
+    max-width: 400px;
+    background-color: #1e1e1e !important; /* Forces Dark Grey */
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    margin: 60px auto;
+    border: 1px solid #333;
+    color: white !important; /* Forces White Text */
+}
+
+h2 {
+    text-align: center;
+    color: white;
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+/* Inputs */
+form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #444;
+    background-color: #2d2d2d; /* Dark Input Background */
+    color: white;
+    border-radius: 8px;
+}
+
+form label {
+    color: #b0b0b0; /* Light Grey Label */
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* Button */
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #6c5ce7, #00cec9); /* Purple/Teal */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.btn-submit:hover {
+    opacity: 0.9;
+}
+
+/* Links */
+a {
+    color: #00cec9; /* Teal Links */
+    text-decoration: none;
+}

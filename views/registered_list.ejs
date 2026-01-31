@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/head') %>
+    <title><%= title %> - <%= event.name %></title>
+    <link rel="stylesheet" href="/css/tables.css">
+</head>
+<body>
+    <%- include('partials/header') %>
+
+    <div class="container mt-5">
+        <div class="header-section">
+            <h2 class="display-5 fw-bold text-primary">Registrations for <%= event.name %></h2>
+            <p colour="white" class="lead text-muted">Total registered: <%= registrations.length %> | Event Date: <%= event.event_date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></p>
+            <hr>
+        </div>
+
+        <% if (registrations.length === 0) { %>
+            <div class="alert alert-info" role="alert">
+                <h4>No Registrations Yet!</h4>
+                <p>No students have registered for this event.</p>
+            </div>
+        <% } else { %>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle attendance-table">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Registration Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% registrations.forEach(reg => { %>
+                            <tr>
+                                <td><%= reg.user_id %></td>
+                                <td><%= reg.fullname %></td>
+                                <td><%= reg.email %></td>
+                                <td><%= new Date(reg.reg_date).toLocaleDateString() %></td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        <% } %>
+        
+        <a href="/" class="btn btn-secondary mt-4">← Back to Events</a>
+
+    </div>
+    <%- include('partials/footer') %>
+</body>
+</html>

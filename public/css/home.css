@@ -1,0 +1,137 @@
+ /* public/css/home.css */
+
+/* 1. The Event Grid Layout */
+.event-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    padding-bottom: 50px;
+}
+
+/* 2. Dark Mode Card Design */
+.event-card {
+    background-color: var(--card-bg); /* Uses the dark grey from global.css */
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #333;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    border-color: var(--primary); /* Subtle purple glow on hover */
+}
+
+.card-content {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 3. Typography inside Card */
+.card-content h3 {
+    margin-top: 0;
+    color: #ffffff; /* Bright white for titles */
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+
+.event-info {
+    color: #b0b0b0; /* Light grey for details */
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+/* 4. Register Button (The Big Gradient Button) */
+.btn-register {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 12px 0;
+    text-decoration: none;
+    border-radius: 8px;
+    margin-top: auto; /* Pushes button to bottom if content is short */
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btn-register:hover {
+    opacity: 0.9;
+}
+
+/* 5. Admin Controls Section (Edit/Delete/List) */
+.admin-controls {
+    display: flex;
+    gap: 8px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #333; /* Dark divider line */
+}
+
+/* Common style for small admin buttons */
+.btn-view, .btn-edit, .btn-delete {
+    flex: 1;
+    text-align: center;
+    padding: 8px 0;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+/* Specific Colors for Admin Actions */
+.btn-view {
+    background-color: #3498db; /* Blue */
+}
+.btn-view:hover { background-color: #2980b9; }
+
+.btn-edit {
+    background-color: #f39c12; /* Orange */
+}
+.btn-edit:hover { background-color: #d68910; }
+
+.btn-delete {
+    background-color: #e74c3c; /* Red */
+}
+.btn-delete:hover { background-color: #c0392b; }
+
+/* Add to public/css/home.css */
+
+.empty-state-search {
+    text-align: center;
+    padding: 60px;
+    margin-top: 50px;
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    color: var(--text-muted);
+    border: 1px dashed #444; /* Dashed border for attention */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.empty-state-search h3 {
+    font-size: 1.6rem;
+    color: var(--primary); /* Use purple/teal for emphasis */
+    margin-bottom: 10px;
+}
+
+.empty-state-search p {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+}
