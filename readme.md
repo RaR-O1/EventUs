@@ -60,8 +60,7 @@ It provides **role-based access** for Administrators and Students, ensuring secu
 ---
 
 ## 🧱 Project Architecture
-
-The application follows the **MVC (Model–View–Controller)** pattern:
+This project follow MVC architecture design .
 
 
 ---
